@@ -1,1 +1,6 @@
 streamlit
+supabase
+st_star_rating
+pyshorteners
+pandas
+postgrest
