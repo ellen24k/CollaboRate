@@ -1,0 +1,15 @@
+이 프로그램의 기술 스택:
+
+- **프로그래밍 언어**: Python, pl/pgSQL
+- **웹 프레임워크**: Streamlit
+- **데이터베이스**: PostgreSQL
+- **패키지 관리**: pip
+- **사용된 주요 라이브러리**:
+  - `streamlit`: 웹 애플리케이션 프레임워크
+  - `pandas`: 데이터 조작 및 분석
+  - `postgrest`: PostgreSQL 데이터베이스
+  - `supabase`: 데이터베이스 관리 및 인증
+  - `st-star-rating`: 별점 기능 제공
+  - `pyshorteners`: URL 단축
+  - `api.qrserver.com`: QR 코드 생성
+- **그 외 많은 도움**: AI
