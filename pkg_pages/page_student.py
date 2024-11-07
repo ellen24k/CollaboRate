@@ -39,7 +39,7 @@ def load_view():
             project_info = next((item for item in project_infos if item['group_number'] == group), None)
 
             if project_info:
-                st.markdown(f'# :rainbow[{project_info['project_name']}]')
+                st.markdown(f'## :rainbow[{project_info['project_name']}]')
                 st.markdown(project_info['project_desc'])
                 st.divider()
                 st.markdown(f'###### project by :rainbow[{project_info['team_name']}]')
