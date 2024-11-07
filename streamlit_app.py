@@ -2,6 +2,7 @@ import streamlit as st
 from pkg_utils.utils import menu_hide
 from pkg_pages import page_admin, page_login, page_student
 
+
 def main():
     if 'student' not in st.session_state:
         st.session_state['student'] = False
