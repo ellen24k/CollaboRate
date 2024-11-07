@@ -21,7 +21,7 @@ def load_view():
     points = {}
 
     st.markdown(f'[{student_name}] 님 환영합니다.')
-    st.markdown(f'[학번] {student_id} [클래스코드] {class_code} [그룹] {student_group}')
+    st.markdown(f'[학번]{student_id} [클래스코드]{class_code} [그룹]{student_group}')
 
     for group in groups:
         point = next((item['point'] for item in rating_points if item['group_number'] == group), 0)
@@ -39,7 +39,7 @@ def load_view():
             project_info = next((item for item in project_infos if item['group_number'] == group), None)
 
             if project_info:
-                st.markdown(f'## :rainbow[{project_info['project_name']}]')
+                st.markdown(f'### :rainbow[{project_info['project_name']}]')
                 st.markdown(project_info['project_desc'])
                 st.divider()
                 st.markdown(f'###### project by :rainbow[{project_info['team_name']}]')
