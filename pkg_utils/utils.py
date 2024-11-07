@@ -15,16 +15,11 @@ def padding_set():
     """
     st.markdown(css, unsafe_allow_html=True)
 
-
-def shorten_url(url):
-    s = pyshorteners.Shortener()
-    ret_url = s.tinyurl.short(url)
-    return ret_url
-
-
-def url_to_qr_code(url):
-    qr_code = f"https://api.qrserver.com/v1/create-qr-code/?size=400x400&data={url}"
-    return qr_code
+def logo(str='', divide=True):
+    padding_set()
+    st.title('**:rainbow[Collabo + Rate]**')
+    st.markdown(f'{str} _Real-time team project rating system_')
+    if divide: st.divider()
 
 
 def menu_hide():
@@ -37,3 +32,16 @@ def menu_hide():
     </style>
     """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+
+def shorten_url(url):
+    s = pyshorteners.Shortener()
+    ret_url = s.tinyurl.short(url)
+    return ret_url
+
+
+def url_to_qr_code(url):
+    qr_code = f'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data={url}'
+    return qr_code
+
+
