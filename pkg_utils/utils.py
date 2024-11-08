@@ -17,7 +17,7 @@ def padding_set():
 
 def logo(str='', divide=True):
     padding_set()
-    st.title(':rainbow[Collabo + Rate]')
+    st.title(':rainbow[Collabo+Rate]')
     st.markdown(f'{str} _Real-time team project rating system_')
     if divide: st.divider()
 

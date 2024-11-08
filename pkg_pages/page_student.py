@@ -20,7 +20,7 @@ def load_view():
     project_infos = get_project_infos(class_code)
     points = {}
 
-    st.markdown(f'[{student_name}] 님 환영합니다.')
+    st.markdown(f'[{student_name}]님 환영합니다.')
     st.markdown(f'[학번]{student_id} [클래스코드]{class_code} [그룹]{student_group}')
 
     for group in groups:
@@ -70,3 +70,5 @@ def load_view():
                     st.balloons()
                 except Exception as e:
                     st.error(e)
+    st.markdown(' ')
+    st.divider()
