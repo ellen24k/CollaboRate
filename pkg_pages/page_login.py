@@ -84,7 +84,7 @@ def load_view():
 
         ngrok_url = st.text_input(
             'ngrok URL',
-            f'https://????-{get_external_ip().replace('.', '-')}.ngrok-free.app'
+            f'https://aaaa-{get_external_ip().replace('.', '-')}.ngrok-free.app'
         )
         if st.button('ngrok short URL/QR 생성'):
             ngrok_s_url = shorten_url(ngrok_url)
