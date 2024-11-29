@@ -1,3 +1,4 @@
+import asyncio
 import time
 from threading import Thread
 
@@ -11,7 +12,7 @@ def load_view():
     logo('[ADMIN]')
 
     class_code = st.session_state['selected_class_code']
-    students = get_students_by_class(class_code)
+    students = asyncio.run(get_students_by_class(class_code))
     group_numbers = get_distinct_group_numbers(class_code)
     max_vote = len(group_numbers) * len(students)
 
