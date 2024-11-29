@@ -24,7 +24,12 @@ def load_view():
     st.markdown(f'[학번]{student_id} [클래스코드]{class_code} [그룹]{student_group}')
 
     for group in groups:
-        point = next((item['point'] for item in rating_points if item['group_number'] == group), 0)
+        # point = next((item['point'] for item in rating_points if item['group_number'] == group), 0)
+        points_list = [item['point'] for item in rating_points if item['group_number'] == group]
+        if points_list:
+            point = points_list[0]
+        else:
+            point = 0
 
         with st.container(border=True, key=f'container_{group}'):
             st.markdown(f'### 그룹 {group}')
@@ -36,7 +41,10 @@ def load_view():
                 except Exception as e:
                     st.error(e)
 
-            project_info = next((item for item in project_infos if item['group_number'] == group), None)
+            # project_info = next((item for item in project_infos if item['group_number'] == group), None)
+            project_info_list = [item for item in project_infos if item['group_number'] == group]
+            project_info = project_info_list[0] if project_info_list else None
+
 
             if project_info:
                 st.markdown(f'### :rainbow[{project_info['project_name']}]')
