@@ -1,4 +1,4 @@
-streamlit
+streamlit==1.39.0
 supabase
 st_star_rating
 pyshorteners
