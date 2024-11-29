@@ -1,8 +1,13 @@
+import asyncio
+import threading
+from time import sleep
+
 import streamlit as st
 from streamlit_star_rating import st_star_rating
 
 from pkg_utils.utils import logo
-from pkg_utils.db_data import get_students_by_class, get_rating_points, insert_rating_point, get_project_infos, update_rating_point
+from pkg_utils.db_data import get_students_by_class, get_rating_points, insert_rating_point, get_project_infos, \
+    update_rating_point, run_asyncio_get
 
 
 def load_view():
@@ -13,16 +18,19 @@ def load_view():
     student_group =st.session_state['group_number']
     class_code = st.session_state['selected_class_code']
 
-    students = get_students_by_class(class_code)
+    # students = get_students_by_class(class_code) #todo 1
+    students, rating_points, project_infos = run_asyncio_get(class_code, student_id)
+
     groups = set(student['group_number'] for student in students)
     group_members = {group: [student['name'] for student in students if student['group_number'] == group] for group in groups}
-    rating_points = get_rating_points(class_code,student_id)
-    project_infos = get_project_infos(class_code)
+
+    # rating_points = get_rating_points(class_code,student_id) #todo 2
+    # project_infos = get_project_infos(class_code) #todo 3
+
     points = {}
 
     st.markdown(f'[{student_name}]님 환영합니다.')
     st.markdown(f'[학번]{student_id} [클래스코드]{class_code} [그룹]{student_group}')
-    st.write('test 1')
 
     for group in groups:
         # point = next((item['point'] for item in rating_points if item['group_number'] == group), 0)
