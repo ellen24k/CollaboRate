@@ -10,6 +10,7 @@ from pkg_utils.db_data import get_students_by_class, get_rating_points, insert_r
     update_rating_point, run_asyncio_get
 
 
+
 def load_view():
     logo()
 
