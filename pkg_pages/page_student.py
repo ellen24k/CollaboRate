@@ -19,14 +19,14 @@ def load_view():
     student_group =st.session_state['group_number']
     class_code = st.session_state['selected_class_code']
 
-    # students = get_students_by_class(class_code) #todo 1
+    # students = get_students_by_class(class_code) #
+    # rating_points = get_rating_points(class_code,student_id) #
+    # project_infos = get_project_infos(class_code) #
     students, rating_points, project_infos = run_asyncio_get(class_code, student_id)
 
     groups = set(student['group_number'] for student in students)
     group_members = {group: [student['name'] for student in students if student['group_number'] == group] for group in groups}
 
-    # rating_points = get_rating_points(class_code,student_id) #todo 2
-    # project_infos = get_project_infos(class_code) #todo 3
 
     points = {}
 
@@ -43,13 +43,6 @@ def load_view():
 
         with st.container(border=True, key=f'container_{group}'):
             st.markdown(f'### 그룹 {group}')
-
-            if point == 0:
-                try:
-                    insert_rating_point(group, student_id, 1, class_code)
-                    point = 1
-                except Exception as e:
-                    st.error(e)
 
             # project_info = next((item for item in project_infos if item['group_number'] == group), None)
             project_info_list = [item for item in project_infos if item['group_number'] == group]
@@ -84,7 +77,10 @@ def load_view():
 
             if points[group] != point:
                 try:
-                    update_rating_point(group, student_id, points[group], class_code)
+                    if point == 0:
+                        insert_rating_point(group, student_id, points[group], class_code)
+                    else:
+                        update_rating_point(group, student_id, points[group], class_code)
                     st.balloons()
                 except Exception as e:
                     st.error(e)
