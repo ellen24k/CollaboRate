@@ -5,6 +5,7 @@ from pkg_utils.utils import logo
 from pkg_utils.db_data import get_students_by_class, get_rating_points, insert_rating_point, get_project_infos, update_rating_point
 
 
+
 def load_view():
     logo()
 

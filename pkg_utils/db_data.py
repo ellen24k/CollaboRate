@@ -85,7 +85,7 @@ def get_virtual_students():
     return data
 
 
-def get_rating_points(class_code, student_id):
+async def get_rating_points(class_code, student_id):
     try:
         response = get_supabase_client().rpc(
             'get_rating_points',
@@ -114,7 +114,7 @@ def insert_rating_point(group_number, student_id, point, class_code):
         st.error(e)
         return None
 
-def get_project_infos(class_code):
+async def get_project_infos(class_code):
     try:
         response = get_supabase_client().rpc(
             'get_project_infos',
@@ -139,7 +139,7 @@ def update_rating_point(group_number, student_id, point, class_code):
     except Exception as e:
         st.error(e)
 
-def get_students_by_class(class_code):
+async def get_students_by_class(class_code):
     try:
         response = get_supabase_client().rpc(
             'get_students_by_class',
@@ -254,3 +254,6 @@ def run_asyncio_simulation_data(data, once_limit=3):
         asyncio.run(insert_simulation_data_limit(data, once_limit))
     else:
         asyncio.run(insert_simulation_data_once(data))
+
+def run_asyncio_get(class_code, student_id):
+    return asyncio.run(get_students_by_class(class_code)), asyncio.run(get_rating_points(class_code, student_id)), asyncio.run(get_project_infos(class_code))
