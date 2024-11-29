@@ -22,6 +22,7 @@ def load_view():
 
     st.markdown(f'[{student_name}]님 환영합니다.')
     st.markdown(f'[학번]{student_id} [클래스코드]{class_code} [그룹]{student_group}')
+    st.write('test 1')
 
     for group in groups:
         # point = next((item['point'] for item in rating_points if item['group_number'] == group), 0)
