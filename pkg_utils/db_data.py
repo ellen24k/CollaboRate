@@ -174,7 +174,7 @@ def generate_data(group_numbers, student_ids, class_code):
     return data
 
 def generate_data_from_class(class_code):
-    students = get_students_by_class(class_code)
+    students = asyncio.run(get_students_by_class(class_code))
     student_ids = [item['student_id'] for item in students]
     group_numbers = get_distinct_group_numbers(class_code)
     data = generate_data(group_numbers, student_ids, class_code)
