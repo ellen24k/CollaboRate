@@ -27,4 +27,4 @@ EXPOSE 8501
 
 # Streamlit 애플리케이션 실행 명령
 # 컨테이너가 시작될 때 Streamlit 애플리케이션을 실행.
-CMD ["streamlit", "run", "streamlit_app.py"]`
+CMD ["streamlit", "run", "streamlit_app.py"]
