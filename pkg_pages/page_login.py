@@ -76,7 +76,7 @@ def load_view():
         st.image('resources/streamlit_qr.png')
         streamlit_url = st.text_input(
             'streamlit URL',
-            'https://collaborate.streamlit.app'
+            'https://collaborate.ellen24k.kro.kr'
         )
         if st.button('streamlit short URL 생성'):
             streamlit_s_url = shorten_url(streamlit_url)
