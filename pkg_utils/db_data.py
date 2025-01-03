@@ -1,43 +1,48 @@
 import asyncio
 import random
 
+import psycopg2
 import streamlit as st
-from supabase import create_client
-from supabase.lib.client_options import ClientOptions
+from psycopg2.extras import DictCursor
 
-_supabase_client = None
+conn = None
 
 def get_supabase_client():
-    global _supabase_client
-    if _supabase_client is None:
-        url = st.secrets["SUPABASE_URL"]
-        key = st.secrets["SUPABASE_ANON_KEY"]
-        opts = ClientOptions().replace(schema = "collaborate")
-        _supabase_client = create_client(url, key, options=opts)
-    return _supabase_client
+    global conn
+    if conn is None:
+        PG_HOST = st.secrets['PG_HOST']
+        PG_DBNAME = st.secrets["PG_DBNAME"]
+        PG_USER = st.secrets["PG_USER"]
+        PG_PASSWORD = st.secrets["PG_PASSWORD"]
+        PG_PORT = st.secrets["PG_PORT"]
+        try:
+            conn = psycopg2.connect(host = PG_HOST, dbname = PG_DBNAME, user = PG_USER, password = PG_PASSWORD, port = PG_PORT)
+        except:
+            print("db conn failed")
+            return None
+    return conn
 
 
 def get_distinct_class_codes():
     try:
-        response = get_supabase_client().rpc('get_distinct_class_codes').execute()
-        return [item['class_code'] for item in response.data]
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT DISTINCT class_code FROM students as s ORDER BY class_code;")
+            return [class_code[0] for class_code in cursor.fetchall()]
     except Exception as e:
         st.error(e)
         return None
 
 def login_student(id, name, group, class_code):
-    response = (
-        get_supabase_client()
-        .table('students')
-        .select('*')
-        .eq('student_id', id)
-        .eq('class_code', class_code)
-        .maybe_single()
-        .execute()
-    )
-    if response:
-        return response.data
-    else:
+    try:
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute(f'select * from students where student_id = \'{id}\' and class_code = \'{class_code}\' limit 1;')
+            response = cursor.fetchone()
+            parsed_response = {'student_id': response[0], 'class_code': response[1], 'group_number' : response[2], 'name' : response[3], 'department' : response[4], 'college' : response[5]}
+            return parsed_response if parsed_response else None
+    except Exception as e:
+        st.error(f'login_student: {e}')
         return None
 
 def get_virtual_students():
@@ -87,78 +92,87 @@ def get_virtual_students():
 
 async def get_rating_points(class_code, student_id):
     try:
-        response = get_supabase_client().rpc(
-            'get_rating_points',
-            {'p_class_code': class_code, 'p_student_id': student_id}
-        ).execute()
-        return response.data
+        conn = get_supabase_client()
+        with conn.cursor(cursor_factory=DictCursor) as cursor:
+            cursor.execute('select get_rating_points(%s, %s);', (student_id, class_code))
+            response = cursor.fetchall()
+        parsed_response = []
+        for item in response:
+            group_number, point = map(int, item[0][1:-1].split(','))
+            parsed_response.append({ 'group_number': group_number, 'point': point })
+        return parsed_response
     except Exception as e:
         st.error(e)
         return None
 
-def insert_rating_point(group_number, student_id, point, class_code):
+def insert_rating_point(group_number, student_id, point, class_code): #todo check 이미 값이 다 들어가있어서 체크 패스
     try:
-        response = (
-            get_supabase_client()
-            .table('rating')
-            .insert({
-                'class_code': str(class_code),
-                'group_number': int(group_number),
-                'student_id': str(student_id),
-                'point':int(point)
-            })
-            .execute()
-        )
-        return response
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute('insert into rating (class_code, group_number, student_id, point) values (%s, %s, %s, %s);', (class_code, group_number, student_id, point))
+            return True
     except Exception as e:
         st.error(e)
-        return None
+        return False
+
 
 async def get_project_infos(class_code):
     try:
-        response = get_supabase_client().rpc(
-            'get_project_infos',
-            {'p_class_code': class_code}
-        ).execute()
-        return response.data
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT  g.group_number, g.group_name, g.project_name, g.project_desc \
+            FROM group_info as g \
+            WHERE g.class_code = (%s);', (class_code,))
+            responses = cursor.fetchall()
+            # print(responses)
+        parsed_responses = []
+        for item in responses:
+            parsed_responses.append({ 'group_number': item[0], 'team_name': item[1], 'project_name': item[2], 'project_desc': item[3]})
+        return parsed_responses
     except Exception as e:
         st.error(e)
         return None
 
 def update_rating_point(group_number, student_id, point, class_code):
     try:
-        get_supabase_client().rpc(
-            'update_rating_point',
-            {
-                'p_group_number': group_number,
-                'p_student_id': student_id,
-                'p_class_code': class_code,
-                'p_point': point
-            }
-        ).execute()
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute(f'UPDATE rating as r \
+            SET point = {point} \
+            WHERE r.group_number = {group_number} \
+            AND r.student_id = \'{student_id}\' \
+            AND r.class_code = \'{class_code}\';')
     except Exception as e:
         st.error(e)
 
 async def get_students_by_class(class_code):
     try:
-        response = get_supabase_client().rpc(
-            'get_students_by_class',
-            {'p_class_code': class_code}
-        ).execute()
-        return response.data
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute(f'select get_students_by_class(\'{class_code}\')')
+            response = cursor.fetchall()
+        # print(response)
+        parsed_response = []
+        for item in response:
+            student_id, name, group_number, college, major, class_code = item[0][1:-1].split(',')
+            parsed_response.append({ 'student_id': student_id.strip(), 'name': name.strip(), 'group_number': int(group_number.strip()), 'college': college.strip(), 'major': major.strip(), 'class_code': class_code.strip() })
+        return parsed_response
     except Exception as e:
+        # print('err',e)
         st.error(e)
         return None
 
 
 def get_distinct_group_numbers(class_code):
     try:
-        response = get_supabase_client().rpc(
-            'get_distinct_group_numbers',
-            {'p_class_code': class_code}
-        ).execute()
-        return [item['group_number'] for item in response.data]
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute(f'select get_distinct_group_numbers(\'{class_code}\')')
+            response = cursor.fetchall()
+        # print(response)
+        return [item[0] for item in response]
     except Exception as e:
+        # print(e)
         st.error(e)
         return None
 
@@ -182,69 +196,66 @@ def generate_data_from_class(class_code):
 
 def get_rating_by_class(class_code):
     try:
-        response = get_supabase_client().rpc(
-            'get_rating_by_class',
-            {'p_class_code': class_code}
-        ).execute()
-        return response.data
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute(f'select get_rating_by_class(\'{class_code}\')')
+            response = cursor.fetchall()
+            # print(response)
+        parsed_response = []
+        for item in response:
+            group_number, student_id, class_code, point = item[0][1:-1].split(',')
+            parsed_response.append({'group_number': int(group_number), 'student_id': student_id, 'class_code': class_code, 'point': int(point)})
+        return parsed_response
     except Exception as e:
+        # print('err: ',e)
         st.error(e)
         return None
 
 def delete_class_rating_data(class_code):
     try:
-        (get_supabase_client().table('rating')
-         .delete()
-         .eq('class_code', class_code)
-         .neq('student_id', 0)
-         .execute())
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            cursor.execute(f'delete from rating where class_code = \'{class_code}\' and student_id <> \'{0}\'')
     except Exception as e:
         st.error(e)
 
 
-async def insert_simulation_data(data):
-    for record in data:
-        (get_supabase_client()
-        .table('rating')
-        .insert({
-            'group_number': record[0],
-            'point': record[1],
-            'student_id': record[2],
-            'class_code': record[3]
-        }).execute())
-        await asyncio.sleep(random.uniform(0.05, 0.1))
+async def insert_simulation_data(data): # todo check
+    try:
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            for record in data:
+                cursor.execute(f'insert into rating (group_number, point, student_id, class_code) values (\'{record[0]}\', \'{record[1]}\', \'{record[2]}\', \'{record[3]}\');')
+                await asyncio.sleep(random.uniform(0.05, 0.1))
+    except Exception as e:
+        st.error(e)
+        # print('err: ',e)
 
 
 async def insert_simulation_data_limit(data, once_limit):
     try:
-        for i in range(0, len(data), once_limit):
-            batch = data[i: i + once_limit]
-            (get_supabase_client()
-             .table('rating')
-             .insert([{
-                'group_number': record[0],
-                'point': record[1],
-                'student_id': record[2],
-                'class_code': record[3]
-             } for record in batch])
-            .execute())
-            await asyncio.sleep(random.uniform(0.1,0.2))
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            for i in range(0, len(data), once_limit):
+                batch = data[i: i + once_limit]
+                for record in batch:
+                    cursor.execute(f'insert into rating (group_number, point, student_id, class_code) values (\'{record[0]}\', \'{record[1]}\', \'{record[2]}\', \'{record[3]}\');')
+                    conn.commit()
+                await asyncio.sleep(random.uniform(0.1,0.2))
     except Exception as e:
+        # print('err: ', e)
         st.error(e)
-
 
 async def insert_simulation_data_once(data):
     try:
-        (get_supabase_client()
-         .table('rating')
-         .insert([{
-            'group_number': record[0],
-            'point': record[1],
-            'student_id': record[2],
-            'class_code': record[3]
-        } for record in data])
-        .execute())
+        conn = get_supabase_client()
+        with conn.cursor() as cursor:
+            for record in data:
+                cursor.execute(f'insert into rating (group_number, point, student_id, class_code) values (\'{record[0]}\', \'{record[1]}\', \'{record[2]}\', \'{record[3]}\');')
+                conn.commit()
+                await asyncio.sleep(random.uniform(0.1,0.2))
     except Exception as e:
+        # print('err: ', e)
         st.error(e)
 
 def run_asyncio_simulation_data(data, once_limit=3):
