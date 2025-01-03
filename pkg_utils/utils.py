@@ -1,7 +1,6 @@
 import pyshorteners
 import streamlit as st
 
-
 def padding_set():
     css = """
     <style>

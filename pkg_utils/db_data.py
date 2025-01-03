@@ -37,7 +37,7 @@ def login_student(id, name, group, class_code):
     try:
         conn = get_supabase_client()
         with conn.cursor() as cursor:
-            cursor.execute(f'select * from students where student_id = \'{id}\' and class_code = \'{class_code}\' limit 1;')
+            cursor.execute(f'select * from students where student_id = \'{id}\' and name = \'{name}\' and group_number = \'{group}\' and class_code = \'{class_code}\';')
             response = cursor.fetchone()
             parsed_response = {'student_id': response[0], 'class_code': response[1], 'group_number' : response[2], 'name' : response[3], 'department' : response[4], 'college' : response[5]}
             return parsed_response if parsed_response else None
@@ -105,7 +105,7 @@ async def get_rating_points(class_code, student_id):
         st.error(e)
         return None
 
-def insert_rating_point(group_number, student_id, point, class_code): #todo check 이미 값이 다 들어가있어서 체크 패스
+def insert_rating_point(group_number, student_id, point, class_code):
     try:
         conn = get_supabase_client()
         with conn.cursor() as cursor:
@@ -200,7 +200,6 @@ def get_rating_by_class(class_code):
         with conn.cursor() as cursor:
             cursor.execute(f'select get_rating_by_class(\'{class_code}\')')
             response = cursor.fetchall()
-            # print(response)
         parsed_response = []
         for item in response:
             group_number, student_id, class_code, point = item[0][1:-1].split(',')
@@ -220,7 +219,7 @@ def delete_class_rating_data(class_code):
         st.error(e)
 
 
-async def insert_simulation_data(data): # todo check
+async def insert_simulation_data(data):
     try:
         conn = get_supabase_client()
         with conn.cursor() as cursor:
@@ -228,8 +227,8 @@ async def insert_simulation_data(data): # todo check
                 cursor.execute(f'insert into rating (group_number, point, student_id, class_code) values (\'{record[0]}\', \'{record[1]}\', \'{record[2]}\', \'{record[3]}\');')
                 await asyncio.sleep(random.uniform(0.05, 0.1))
     except Exception as e:
-        st.error(e)
         # print('err: ',e)
+        st.error(e)
 
 
 async def insert_simulation_data_limit(data, once_limit):

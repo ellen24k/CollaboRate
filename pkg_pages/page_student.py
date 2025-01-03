@@ -1,15 +1,8 @@
-import asyncio
-import threading
-from time import sleep
-
 import streamlit as st
 from streamlit_star_rating import st_star_rating
 
 from pkg_utils.utils import logo
-from pkg_utils.db_data import get_students_by_class, get_rating_points, insert_rating_point, get_project_infos, \
-    update_rating_point, run_asyncio_get
-
-
+from pkg_utils.db_data import insert_rating_point, update_rating_point, run_asyncio_get
 
 def load_view():
     logo()
@@ -19,9 +12,6 @@ def load_view():
     student_group =st.session_state['group_number']
     class_code = st.session_state['selected_class_code']
 
-    # students = get_students_by_class(class_code) #
-    # rating_points = get_rating_points(class_code,student_id) #
-    # project_infos = get_project_infos(class_code) #
     students, rating_points, project_infos = run_asyncio_get(class_code, student_id)
 
     groups = set(student['group_number'] for student in students)
@@ -34,7 +24,6 @@ def load_view():
     st.markdown(f'[학번]{student_id} [클래스코드]{class_code} [그룹]{student_group}')
 
     for group in groups:
-        # point = next((item['point'] for item in rating_points if item['group_number'] == group), 0)
         points_list = [item['point'] for item in rating_points if item['group_number'] == group]
         if points_list:
             point = points_list[0]
@@ -44,10 +33,8 @@ def load_view():
         with st.container(border=True, key=f'container_{group}'):
             st.markdown(f'### 그룹 {group}')
 
-            # project_info = next((item for item in project_infos if item['group_number'] == group), None)
             project_info_list = [item for item in project_infos if item['group_number'] == group]
             project_info = project_info_list[0] if project_info_list else None
-
 
             if project_info:
                 st.markdown(f'### :rainbow[{project_info['project_name']}]')
