@@ -3,3 +3,4 @@ st-star-rating==0.0.6
 pyshorteners==1.0.1
 pandas==2.2.3
 postgrest==0.17.2
+psycopg2==2.9.10
