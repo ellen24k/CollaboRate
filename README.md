@@ -50,9 +50,7 @@
 - - -
 |  Main Page  |  Student Page  |  Admin Page  |
 | :---: | :---: | :---: |
-| <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/main_page.png" alt="Main Page" height="250px" /> 
-| <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/student_page.png" alt="Student Page" height="250px" /> 
-|  <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/admin_page.png" alt="Admin Page" height="250px" />|
+| <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/main_page.png" alt="Main Page" height="250px" /> | <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/student_page.png" alt="Student Page" height="250px" /> |  <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/admin_page.png" alt="Admin Page" height="250px" /> |
 
 
 ### 주요 기능
@@ -69,8 +67,7 @@
 - - -
 |  Activity Diagram  |  Functional Diagram  |
 | :---: | :---: |
-| ![activity.png](https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/activity_diagram.png) 
-| ![functional.png](https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/functional_diagram.png) |
+| ![activity.png](https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/activity_diagram.png) | ![functional.png](https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/functional_diagram.png) |
 
 
 ### Log & Continue
