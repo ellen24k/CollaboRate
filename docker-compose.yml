@@ -1,0 +1,16 @@
+services:
+  app:
+    image: streamlit_collaborate:latest
+    container_name: CollaboRate
+    expose:
+      - "8501"
+    volumes:
+      - /home/ubuntu/docker/streamlit_collaborate/secrets.toml:/app/.streamlit/secrets.toml
+
+    networks:
+      net:
+        ipv4_address: 172.22.22.51
+
+networks:
+  net:
+    external: true
