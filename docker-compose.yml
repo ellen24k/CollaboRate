@@ -1,5 +1,6 @@
 services:
   app:
+    build: .
     image: streamlit_collaborate:latest
     container_name: CollaboRate
     expose:
