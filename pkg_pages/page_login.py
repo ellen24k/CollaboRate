@@ -82,11 +82,11 @@ def load_view():
             streamlit_s_url = shorten_url(streamlit_url)
             st.write(streamlit_s_url)
 
-        ngrok_url = st.text_input(
-            'ngrok URL',
-            f'https://aaaa-{get_external_ip().replace('.', '-')}.ngrok-free.app'
-        )
-        if st.button('ngrok short URL/QR 생성'):
-            ngrok_s_url = shorten_url(ngrok_url)
-            st.write(ngrok_s_url)
-            st.image(url_to_qr_code(ngrok_s_url))
+        # ngrok_url = st.text_input(
+        #     'ngrok URL',
+        #     f'https://aaaa-{get_external_ip().replace('.', '-')}.ngrok-free.app'
+        # )
+        # if st.button('ngrok short URL/QR 생성'):
+        #     ngrok_s_url = shorten_url(ngrok_url)
+        #     st.write(ngrok_s_url)
+        #     st.image(url_to_qr_code(ngrok_s_url))
