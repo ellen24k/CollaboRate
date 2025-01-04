@@ -24,6 +24,7 @@
 ###### - _Languages & Frameworks_
 <div style="display: flex; gap: 10px">
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Badge"> 
+    <img src="https://img.shields.io/badge/PL%2FpgSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="PL/pgSQL Badge">
     <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit Badge">
 </div>
 
@@ -32,7 +33,7 @@
     <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL Badge">
     <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Badge">
 </div>
-
+  
 ###### - _Tools & Platforms_
 <div style="display: flex; gap: 10px;">
     <img src="https://img.shields.io/badge/ngrok-1F1E25?style=for-the-badge&logo=ngrok&logoColor=white" alt="ngrok Badge">
@@ -40,9 +41,10 @@
     <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas Badge">
 </div>
 
-###### - _Cloud Service Provider_
+###### - _Cloud Service Provider & CI/CD_
 <div style="display: flex; gap: 10px;">
     <img src="https://img.shields.io/badge/Oracle_Cloud-F80000?style=for-the-badge&logo=oracle&logoColor=white" alt="Oracle Badge">
+    <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="Jenkins Badge">
 </div>
 
 
