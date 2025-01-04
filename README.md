@@ -33,26 +33,33 @@
     <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL Badge">
     <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Badge">
 </div>
-  
-###### - _Tools & Platforms_
+
+###### - _Tools & Libraries_
 <div style="display: flex; gap: 10px;">
     <img src="https://img.shields.io/badge/ngrok-1F1E25?style=for-the-badge&logo=ngrok&logoColor=white" alt="ngrok Badge">
     <img src="https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Compose Badge">
     <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas Badge">
 </div>
 
-###### - _Cloud Service Provider & CI/CD_
+###### - _Cloud Service Provider_
 <div style="display: flex; gap: 10px;">
     <img src="https://img.shields.io/badge/Oracle_Cloud-F80000?style=for-the-badge&logo=oracle&logoColor=white" alt="Oracle Badge">
-    <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="Jenkins Badge">
 </div>
+
+##### - _CI/CD_
+<div style="display: flex; gap: 10px;">
+    <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="Jenkins Badge">
+    <img src="https://img.shields.io/badge/GitHub%20Webhook-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Webhook Badge">
+</div>
+
+
 
 
 ### 화면 구성
 - - -
 |  Main Page  |  Student Page  |  Admin Page  |
 | :---: | :---: | :---: |
-| <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/main_page.png" alt="Main Page" height="250px" /> | <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/student_page.png" alt="Student Page" height="250px" /> |  <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/admin_page.png" alt="Admin Page" height="250px" /> |
+| <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/main_page.png" alt="Main Page" height="250px" /> | <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/student_page.png" alt="Student Page" height="250px" /> |  <img src="https://raw.githubusercontent.com/ellen24k/CollaboRate/main/docs/images/admin_page_after.png" alt="Admin Page" height="250px" /> |
 
 
 ### 주요 기능
