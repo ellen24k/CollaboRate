@@ -7,7 +7,7 @@ services:
       - "8501"
     volumes:
       - /home/ubuntu/docker/streamlit_collaborate/secrets.toml:/app/.streamlit/secrets.toml
-
+    restart: unless-stopped
     networks:
       net:
         ipv4_address: 172.22.22.51
