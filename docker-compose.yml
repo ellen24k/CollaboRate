@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     networks:
       net:
-        ipv4_address: 172.22.22.51
+        ipv4_address: 172.22.22.101
 
 networks:
   net:
