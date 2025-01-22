@@ -25,7 +25,7 @@
 
 
 
-### _**Teck Stacks**_
+### _**Tech Stacks**_
 - - -
 ###### - _Languages & Frameworks_
 <div style="display: flex; gap: 10px">
