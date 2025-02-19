@@ -1,8 +1,8 @@
 services:
   app:
     build: .
-    image: streamlit_collaborate:latest
-    container_name: CollaboRate
+    image: prj-collaborate:latest
+    container_name: prj-CollaboRate
     # expose:
     #   - "8501"
     volumes:
